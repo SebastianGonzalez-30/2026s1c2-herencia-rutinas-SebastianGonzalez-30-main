@@ -1,0 +1,68 @@
+import gimnasia.*
+import personas.*
+
+
+describe "rutinas" {
+
+//Punto 1: rutinas
+test "correrEnLaPlaya quema" {
+ 
+const correrEnLaPlaya = new RutinaRunning()
+ 
+assert.equals(360, correrEnLaPlaya.caloriasQueQuemaPor(5)) 
+assert.equals(10200, correrEnLaPlaya.caloriasQueQuemaPor(90)) 
+}
+
+test "correr maratones... tambien cansa" {
+  
+  const correrEnMaraton = new RutinaMaraton()
+
+  assert.equals(900, correrEnMaraton.caloriasQueQuemaPor(5))
+  assert.equals(25500, correrEnMaraton.caloriasQueQuemaPor(90))  
+
+}
+
+test "ahora remamos" {
+  
+	const nadarEnRemo = new RutinaRemo()
+
+  assert.equals(520, nadarEnRemo.caloriasQueQuemaPor(5))
+  assert.equals(9360, nadarEnRemo.caloriasQueQuemaPor(90))
+}
+
+test "Remo competitivo" {
+  
+	const nadarEnRemoCompetitivo = new RutinaRemoCompeticion()
+
+	assert.equals(510, nadarEnRemoCompetitivo.caloriasQueQuemaPor(5))
+  	assert.equals(12750, nadarEnRemoCompetitivo.caloriasQueQuemaPor(90))
+
+}
+
+//Punto 2: Personas
+
+test "Entrenamientos de Calamardo con peso 60" {
+  
+	const calamardo = new PersonaSedentaria(tiempoDeEjercitacion = 5, peso = 60)
+	const rutinaMaraton = new RutinaMaraton()
+	const rutinaCorrerEnLaPlaya = new RutinaRunning()
+	const rutinaRemo = new RutinaRemo() 
+	const rutinaRemoDeRemeros = new RutinaRemoCompeticion()
+
+	assert.equals(59.948.truncate(3), calamardo.pesoPerdidoPorAplicarRutinaPor(rutinaCorrerEnLaPlaya, calamardo.tiempoDeEjercitacion()).truncate(3))
+	assert.equals(59.871.truncate(3), calamardo.pesoPerdidoPorAplicarRutinaPor(rutinaMaraton, calamardo.tiempoDeEjercitacion()).truncate(3))
+	assert.equals(59.925.truncate(3), calamardo.pesoPerdidoPorAplicarRutinaPor(rutinaRemo, calamardo.tiempoDeEjercitacion()).truncate(3))
+	assert.equals(59.927.truncate(3), calamardo.pesoPerdidoPorAplicarRutinaPor(rutinaRemoDeRemeros, calamardo.tiempoDeEjercitacion()).truncate(3))
+
+}
+
+test "Calamardo no puede entrenar" {
+  
+	const calamardo = new PersonaSedentaria(tiempoDeEjercitacion = 5, peso = 40)
+	const rutinaCorrerEnLaPlaya = new RutinaRunning()
+
+	assert.equals(0, calamardo.pesoPerdidoPorAplicarRutinaPor(rutinaCorrerEnLaPlaya, calamardo.tiempoDeEjercitacion()))
+}
+
+
+}
